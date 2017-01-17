@@ -132,6 +132,12 @@ def main():
 
         for tweet in r.json()['statuses']:
             current_id = tweet['id']
+            id_str = tweet['id_str']
+            if str(current_id) != id_str:
+                logging.warning('id_long: %s', current_id)
+                logging.warning('id_str : %s', id_str)
+                logging.warning('id_conv: %s', int(id_str))
+                logging.warning('TYPE: %s', type(current_id) )
             if current_id < min_id:
                 min_id = current_id
             if current_id > newest_id:
