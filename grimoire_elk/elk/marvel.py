@@ -43,19 +43,23 @@ class MarvelEnrich(Enrich):
         comic = item['data']
 
         # Fields that are the same in item and eitem
-        copy_fields = ["id", "urls", "title", "modified"]
+        copy_fields = ["urls", "title", "modified"]
         for f in copy_fields:
             if f in comic:
                 eitem[f] = comic[f]
             else:
                 eitem[f] = None
         # Fields which names are translated
-        map_fields = {"title": "comic_title"}
+        map_fields = {"title": "comic_title",
+                      "id": "comic_id"}
         for fn in map_fields:
             if fn in comic:
                 eitem[map_fields[fn]] = comic[fn]
             else:
                 eitem[map_fields[fn]] = None
+
+        # Thumbnails
+        eitem['url_thumbnail'] = item['data']['thumbnail']['path']
 
         return eitem
 
